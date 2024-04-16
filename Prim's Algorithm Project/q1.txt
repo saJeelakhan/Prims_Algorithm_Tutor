@@ -1,0 +1,43 @@
+
+
+Basic Concepts:
+
+Graphs:
+
+Graphs are fundamental mathematical structures used to model relationships between objects.
+They consist of nodes (also called vertices) connected by edges (also called links or arcs).
+G(V, E)
+V = Vertices of the graph.
+E = Edges of the graph.
+
+
+Undirected Graphs:
+
+An undirected graph is a type of graph where connections between nodes (also known as vertices) have no
+specific direction associated with them. In other words, the relationships between nodes are symmetric.
+if node A is connected to node B, then node B is also connected to node A. Undirected graphs consist of a set
+of vertices and a set of edges. The edges simply represent the relationships or connections between pairs of
+vertices without any indication of direction. These graphs are often used to model relationships where the
+relationship between two entities is mutual or bidirectional, such as friendships in a social network or
+connections in a network of computers. 
+
+
+Weighted Graphs:
+
+Weighted graphs, on the other hand, assign a value or weight to each edge.
+These weights could represent distances, costs, or any other relevant metric associated with the
+relationship between nodes.Combining these concepts, you can have undirected graphs with weighted
+edges, capturing not just the relationships between nodes but also the magnitude or significance of
+those relationships. 
+
+
+Spanning Trees:
+
+A subgraph T of a undirected graph G = ( V, E ) is a spanning tree of G if it is a tree and contains every
+vertex of G.
+
+
+MST:
+
+Minimum Spanning Tree (MST) in an undirected connected weighted graph is a spanning tree of minimum
+weight.

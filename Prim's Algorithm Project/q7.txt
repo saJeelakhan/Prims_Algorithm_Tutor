@@ -1,0 +1,12 @@
+
+
+USE IN REAL LIFE :
+
+Prim's algorithm is used in computer networks for designing efficient communication networks, 
+such as in routing protocols like OSPF (Open Shortest Path First). It's also employed in image 
+segmentation for computer vision applications, ensuring optimal connectivity between pixels.
+Additionally, the algorithm finds applications in circuit design, minimizing wire lengths on printed
+circuit boards for more efficient and cost-effective layouts.
+
+
+

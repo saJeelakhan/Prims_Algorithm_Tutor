@@ -1,0 +1,46 @@
+
+
+Pseudo Code:
+In order to find the MST of a graph using Prim's Algorthm use the following steps:
+
+
+1- Initialization:
+
+> Set all vertices' keys (distances) to infinity except the source node's key, which is set to 0.
+for each u belongs toV[G]
+do key[u] = infinity
+> Set all predecessors to NIL initially.
+Pred[u] = NIL 
+> Create a set Q containing all vertices.
+Q = V[G]
+
+
+2- Main Loop:
+
+> While Q is not empty:
+Select the vertex u with the minimum key value from Q using EXTRACT-MIN(Q).
+do u = EXTRACT-MIN(Q) 
+
+
+3- Exploring Neighbors:
+
+> For each vertex v adjacent to u (belongs to Adj[u]):
+Check if v is still in the set Q and if the weight of the edge (u, v) is less than the current key value of v.
+> If the condition is met, update Pred[v] to indicate u as its predecessor and update the key of v to the weight
+of the edge (u, v).
+for each v belongs to Adj[u]
+do if v belongs to Q and w( u ,v ) < key[v]
+then Pred[v] = u
+key[v] = w(u, v)
+
+
+4- Algorithm Execution:
+
+Continue looping through the vertices until Q becomes empty, exploring the neighboring vertices of each selected
+node and updating their keys and predecessors based on the conditions specified in the algorithm.
+
+
+5- Termination:
+
+When Q becomes empty, the algorithm terminates, and you've successfully found the minimum spanning tree
+or the shortest path tree from the given source node.

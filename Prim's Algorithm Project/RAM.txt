@@ -1,0 +1,48 @@
+
+
+Graph Representation in RAM:
+
+In graph theory, a graph representation is a technique for storing a graph in a computer's memory.
+A graph is a data structure made up of a set of vertices (also known as nodes) and edges. Graphs are
+used to represent the relationships between objects. A graph can be represented using:
+Adjacency matrix orAdjacency list 
+
+
+Adjacency Matrix Representation:
+
+An adjacency matrix can be thought of as a table with rows and columns. It is a two-dimensional array
+where each cell represents whether there is an edge between two vertices. In a weighted graph, these
+cells may contain the weight of the edge. The sequential representation of a graph, often referred to as
+the adjacency matrix representation, utilizes a two-dimensional array to indicate the presence or absence
+of edges between vertices. Each element in the array denotes whether an edge exists (or the weight of the edge)
+between the corresponding vertices.
+
+Pros:
+- Efficient for dense graphs with many edges.
+- Simple representation for small graphs.
+- Easy to determine if an edge exists between two vertices.
+
+Cons:
+- Inefficient for sparse graphs as it consumes space proportional to the square of the number of vertices.
+- Consumes a lot of memory for large graphs.
+- Adding or deleting edges can be expensive as it requires resizing the matrix.
+
+
+Adjacency List Representation:
+An adjacency list is a collection of lists or arrays, where each list/array corresponds to a vertex in the graph.
+Each list contains the vertices that are adjacent to the corresponding vertex. The linked list representation,
+or adjacency list representation, employs a collection of linked lists or arrays where each vertex has a list
+containing its adjacent vertices. This method requires less memory and is efficient for sparse graphs.
+
+Pros:
+- Efficient for sparse graphs as it only uses space proportional to the number of edges and vertices.
+- Memory efficient for large graphs.
+- Faster for iterating through the neighbors of a vertex.
+
+Cons:
+- Slower to determine if an edge exists between two vertices compared to the adjacency matrix.
+- Requires extra storage for storing pointers/references to adjacent vertices.
+
+Both representations have their specific use cases and advantages, and the choice between them depends
+on the type of graph being represented (dense or sparse), the operations being performed
+(edge insertions, deletions, traversal), and memory constraints.

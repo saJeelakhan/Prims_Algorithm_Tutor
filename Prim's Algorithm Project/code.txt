@@ -1,0 +1,328 @@
+#include<iostream>
+using namespace std;
+
+struct edge
+{
+    char dest;    // 'dest' represents the destination node of the edge
+    edge* link;   // 'link' refers to the next edge in the list of adjacent edges
+    int dist;     // 'dist' signifies the distance or weight associated with the edge
+};
+
+struct node
+{
+    node* next;   // 'next' points to the next node in the list of nodes
+    char name;    // 'name' holds the identifier of the node
+    edge* adj;    // 'adj' points to the list of edges connected to this node
+    int dist;     // 'dist' represents the distance from the starting node in a traversal
+    char pred;    // 'pred' stores the predecessor node's identifier in a path
+}*start = NULL;
+
+struct queue
+{
+    node* add_node;  // 'add_node' holds a pointer to a node
+    queue* link;     // 'link' points to the next node in the queue
+};
+
+// Front and rear pointers for the main queue
+queue* front = NULL;
+queue* rear = NULL;
+
+// Front and rear pointers for a secondary queue
+queue* front1 = NULL;
+queue* rear1 = NULL;
+
+// Function to find a node by its name
+node* find(char item) {
+    node* ptr;
+    node* loc;
+    ptr = start;
+    while (ptr != NULL) {
+        if (item == ptr->name) {
+            loc = ptr;
+            return loc;
+        }
+        else {
+            ptr = ptr->next;
+        }
+    }
+    loc = NULL;
+    return loc;
+}
+
+// Function to insert a node with a given name
+void insert_node(char name) {
+    node* tmp, * ptr;
+    tmp = new node();  // Creating a new node
+    tmp->name = name;    // Assigning the identifier
+    tmp->dist = 999;     // Initializing distance (or any default value)
+    tmp->pred = 'n';     // Initializing predecessor (or any default value)
+    tmp->next = NULL;    // Setting 'next' to NULL as it's the last node in the list
+    tmp->adj = NULL;     // Initializing the adjacency list (assuming no edges at insertion)
+
+   if (start == NULL)
+{
+    start = tmp;     // If the graph is empty, set 'start' to the new node
+    return;          // Return as the insertion is completed
+}
+  ptr = start;         // Assigning 'ptr' to the start of the list
+  while (ptr->next != NULL)
+{
+    ptr = ptr->next; // Traversing the list to find the last node
+}
+ptr->next = tmp;     // Assigning 'tmp' as the 'next' node of the last node
+
+// Function to insert an edge between two nodes with distances
+// Function to insert an edge between two nodes with distances
+void insert_edge(char u, char v, int d) {
+    // Locating nodes 'u' and 'v' in the graph
+    node* locu, * locv;
+    edge* ptr, * tmp;
+
+    // Finding the node 'u' and 'v' in the graph
+    locu = find(u);
+    locv = find(v);
+
+    // If source node 'u' is not found in the graph
+    if (locu == NULL) {
+        cout << "Source is not present " << endl;
+        return;
+    }
+
+    // If destination node 'v' is not found in the graph
+    if (locv == NULL) {
+        cout << "Destination is not present " << endl;
+        return;
+    }
+
+    // Creating a new edge 'tmp' between 'u' and 'v' with distance 'd'
+    tmp = new edge();
+    tmp->dest = v;
+    tmp->dist = d;
+    tmp->link = NULL;
+
+    // If 'u' has no edges, assign 'tmp' as the first edge for 'u'
+    if (locu->adj == NULL) {
+        locu->adj = tmp;
+        return;
+    }
+
+    // Traverse to the last edge of 'u' and add 'tmp' as the new edge
+    ptr = locu->adj;
+    while (ptr->link != NULL) {
+        ptr = ptr->link;
+    }
+    ptr->link = tmp;
+}
+
+
+// Function to display the graph
+void display() {
+    node* ptr;
+    edge* q;
+
+    // Starting from the first node in the graph
+    ptr = start;
+    
+    // Traverse through each node and display its connected edges
+    while (ptr != NULL) {
+        // Print the identifier of the current node being processed
+        cout << "Node " << ptr->name << " ";
+
+        // Get the list of edges connected to the current node
+        q = ptr->adj;
+
+        // Display all the edges connected to the current node
+        while (q != NULL) {
+            // Print the identifier of the destination node for the edge
+            cout << "Edge " << q->dest << " ";
+
+            // Move to the next edge connected to the current node
+            q = q->link;
+        }
+
+        // Move to the next node in the graph
+        cout << endl;
+        ptr = ptr->next;
+    }
+}
+
+
+// Function to check if two nodes are equal based on their names
+bool if_equal(node* q, node* p) {
+    bool flag;
+
+    // Start traversing the linked list of nodes from the beginning
+    node* d = start;
+
+    // Iterate through the nodes until the end of the list is reached
+    while (d != NULL) {
+        // If the name of the current node matches 'q', set flag to true and exit the loop
+        if (d->name == q->name) {
+            flag = true;
+            break;
+        }
+
+        // If the name of the current node matches 'p', set flag to false and exit the loop
+        if (d->name == p->name) {
+            flag = false;
+            break;
+        }
+
+        // Move to the next node in the list
+        d = d->next;
+    }
+
+    // Return the flag indicating the equality status of the nodes
+    return flag;
+}
+
+// Function to sort the queue nodes based on node distances and names
+void sort() {
+    queue* q = front;  // Pointer to iterate through the queue nodes
+    node* tmp;         // Temporary pointer to swap nodes
+
+    // Outer loop to traverse through the queue nodes
+    while (q != NULL) {
+        queue* p = q->link;  // Pointer to compare with 'q'
+
+        // Inner loop to compare 'q' with 'p' and rearrange if needed
+        while (p != NULL) {
+            // If the distance of 'q' is greater than 'p', swap the nodes
+            if (q->add_node->dist > p->add_node->dist) {
+                tmp = p->add_node;
+                p->add_node = q->add_node;
+                q->add_node = tmp;
+            }
+
+            // If distances are equal, compare nodes based on names
+            if (q->add_node->dist == p->add_node->dist) {
+                bool a = if_equal(q->add_node, p->add_node);
+
+                // If 'q' node's name is lexicographically larger than 'p', swap the nodes
+                if (a == false) {
+                    tmp = p->add_node;
+                    p->add_node = q->add_node;
+                    q->add_node = tmp;
+                }
+            }
+            p = p->link;  // Move to the next node in the queue
+        }
+        q = q->link;  // Move to the next node in the queue
+    }
+}
+
+// Function to dequeue a node from the main queue
+node* dequeue() {
+    // Check if the main queue is empty
+    if (front == NULL) {
+        cout << "Queue is empty" << endl;
+        return NULL;
+    }
+
+    // If the queue is not empty, remove the front node and adjust pointers
+    queue* tmp = front;
+    front = front->link;
+    tmp->link = NULL;
+
+    // Return the node that was removed from the front of the queue
+    return tmp->add_node;
+}
+
+// Function to enqueue a node into the main queue
+void enque(node** c) {
+    // Create a new queue node and assign the provided node to it
+    queue* tmp = new queue();
+    tmp->add_node = *c;
+    tmp->link = NULL;
+
+    // If the main queue is empty, assign the new node as both front and rear
+    if (front == NULL) {
+        front = tmp;
+        rear = tmp;
+    }
+
+    // If the queue is not empty, add the new node at the end and adjust rear pointer
+    rear->link = tmp;
+    rear = tmp;
+}
+
+// Function to enqueue a node into a secondary queue
+void enque2(node** c) {
+    // Create a new queue node and assign the provided node to it
+    queue* tmp = new queue();
+    tmp->add_node = *c;
+    tmp->link = NULL;
+
+    // If the secondary queue is empty, assign the new node as both front and rear
+    if (front1 == NULL) {
+        front1 = tmp;
+        rear1 = tmp;
+    }
+
+    // If the secondary queue is not empty, add the new node at the end and adjust rear pointer
+    rear1->link = tmp;
+    rear1 = tmp;
+}
+
+
+// Function to traverse and print the path between two nodes
+void traverse_path(char s, char d) {
+    node* locd = find(d); // Locate the destination node
+    while (locd->pred != 'n') { // Traverse back using predecessors until reaching the source node
+        cout << locd->name << "<--"; // Print node name
+        locd = find(locd->pred); // Move to the predecessor node
+    }
+    cout << s << endl; // Print the source node at the end of the path
+}
+
+// Function to display the contents of the secondary queue
+void displayQ() {
+    queue* w = front1; // Pointer to traverse the secondary queue
+    while (w != NULL) { // Loop through the secondary queue nodes
+        cout << w->add_node->name << "  " << w->add_node->dist << endl; // Display node name and distance
+        w = w->link; // Move to the next node in the secondary queue
+    }
+}
+
+// Function to check if a node is present in the queue
+bool isPresent(node* ptr) {
+    queue* q = front; // Initialize a pointer to traverse the queue
+    bool flag = false; // Flag to indicate node presence
+    while (q != NULL) { // Loop through the queue
+        if (ptr->name == q->add_node->name) { // Check if node names match
+            flag = true; // Set flag to true if node is found
+            break; // Exit loop since the node is found
+        }
+        q = q->link; // Move to the next node in the queue
+    }
+    return flag; // Return the flag indicating node presence
+}
+
+// Function to find the shortest path from a source node
+void find_path(char s) {
+    node* q = start; // Start traversing from the first node
+    while (q != NULL) { // Enqueue all nodes into the main queue
+        enque(&q); // Enqueue the node
+        q = q->next; // Move to the next node
+    }
+    node* ptr = find(s); // Find the node corresponding to the source
+    ptr->dist = 0; // Set the distance of the source node to 0
+    while (front != NULL) { // While the main queue is not empty
+        sort(); // Sort the main queue based on node distances
+        node* source = front->add_node; // Get the node with the minimum distance
+        edge* e = source->adj; // Access its adjacent edges
+        while (e != NULL) { // Traverse through its adjacent edges
+            node* qtr = find(e->dest); // Find the node connected by the edge
+            bool flag = isPresent(qtr); // Check if the node is present in the queue
+            if (flag == true) { // If the node is in the queue
+                if (qtr->dist > e->dist) { // Update the distance if shorter path is found
+                    qtr->dist = e->dist; // Update the distance
+                    qtr->pred = source->name; // Update the predecessor for the node
+                }
+            }
+            e = e->link; // Move to the next edge of the source node
+        }
+        node* bp = dequeue(); // Dequeue the processed node from the main queue
+        enque2(&bp); // Enqueue it into a secondary queue for path tracing
+    }
+}

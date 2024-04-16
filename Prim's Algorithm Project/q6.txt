@@ -1,0 +1,12 @@
+
+
+LIMITATIONS:
+
+1-Sensitivity to initial vertex choice.
+2-Inefficiency in sparse graphs.
+3-Limited parallelism.
+4-Assumes connected graphs.
+5-Inefficiency for dynamic graphs.
+6-Complex weight updates.
+7-Increased memory requirements.
+8-Unsuitable for negative weights.				    

@@ -1,0 +1,13 @@
+
+Prim's Algorithm:
+
+It is a fundamental method in computer science used to find the minimum spanning tree of a connected,
+undirected graph.This algorithm efficiently selects edges that form a tree with the smallest possible total
+weight while reaching all the nodes in the graph.By iteratively growing the tree from an initial node,
+Prim's Algorithm guarantees the construction of the minimum spanning tree making it invaluable in various
+applications, especially in network design, where minimizing costs or distances is crucial.
+
+Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for a weighted undirected graph.
+It was developed in 1930 by Czech mathematician Vojtech Jarnik and later rediscovered and republished by
+computer scientists Robert C. Prim in 1957 and E. W. Dijkstra in 1959. Therefore, it is also sometimes called
+the DJP algorithm, Jarik's algorithm, the Prim-Jarnik algorithm,or the Prim-Dijkstra algorithm.

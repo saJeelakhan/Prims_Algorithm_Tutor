@@ -1,0 +1,23 @@
+
+
+Time Complexity:
+
+
+First initialize the key values of the root (we take vertex A here) as (0,N) and key values of other
+vertices as (∞, N).
+This initialization takes time O(V). Now, we find the neighbours of this vertex, which are 3 in number
+and we need to perform decrease key operation on these which takes time log(V). Then we delete the root
+node which takes time log(v) and choose the minimum weighted edge
+We find that the sum of time taken to find the neighbeours is twice the sum of edges in the graph and
+the sum of time taken to perform decreaseKey operation is E(log(V)); where E is the number of edges.
+Since we performed the delete operation V times, total time taken by it becomes V(log(V)). 
+Adding all these along with time V taken to initialize, we get the total time complexity.
+
+
+Since E(log(V)) and V(log(V)) dominate over the other terms, we only consider these.
+Time Complexity = V + V(log(V)) + 2E E(log(v)
+                = V(log(V)) + E(log(v))
+                = O(V(log(V)) + E(log(V)))
+Hence if we use Min heap, we get the time complexity of Prim's algorithm to be O( V(log(v)) + E(log(V)) ).
+Worst case :O( V(log(v)) + E(log(V)) ). 
+Best case : O( E(log(V)) ).

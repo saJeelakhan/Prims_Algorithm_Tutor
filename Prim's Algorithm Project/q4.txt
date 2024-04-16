@@ -1,0 +1,9 @@
+
+
+ADVANTAGES :
+
+1- Guarantees minimum spanning tree.
+2- Efficient, especially in dense graphs (O(E + V log V)).
+3- Well-suited for dense graphs.
+4- Incremental construction for partial solutions.
+5- Easy implementation; applications in network design, circuit wiring, and transportation planning.
